@@ -7,7 +7,7 @@ import sys
 import collections
 
 # Environment setup for Pygame
-#os.environ['SDL_VIDEODRIVER'] = 'dummy'  # Use dummy by default for headless runs; can be overridden
+os.environ['SDL_VIDEODRIVER'] = 'dummy'  # Use dummy by default for headless runs; can be overridden
 
 # Initialize Pygame
 pygame.init()
