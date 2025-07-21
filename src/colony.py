@@ -5,15 +5,36 @@ import random
 import math
 import sys
 import collections
+import argparse
+
 
 # Environment setup for Pygame
 os.environ['SDL_VIDEODRIVER'] = 'dummy'  # Use dummy by default for headless runs; can be overridden
 
+
 # Initialize Pygame
 pygame.init()
 WIDTH, HEIGHT = 800, 600
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Ant Colonies Simulation")
+
+# Parse command-line arguments
+parser = argparse.ArgumentParser(description="Ant Colonies Simulation")
+parser.add_argument('--num_ants', type=int, default=80, help='Number of ants (default: 80)')
+parser.add_argument('--num_food', type=int, default=20, help='Number of food items (default: 20)')
+parser.add_argument('--output_mode', choices=['display', 'files'], default='files',
+                    help='Output mode: "display" for window or "files" for image files (default: files)')
+args = parser.parse_args()
+
+NUM_ANTS = args.num_ants
+NUM_FOOD = args.num_food
+
+# Set up screen based on output mode
+if args.output_mode == 'display':
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.display.set_caption("Ant Colonies Simulation")
+    use_display = True
+else:
+    screen = pygame.Surface((WIDTH, HEIGHT))
+    use_display = False
 
 # Colors as constants
 COLOR_WHITE = (255, 255, 255)
@@ -27,12 +48,11 @@ ANT_RADIUS = 7
 FOOD_RADIUS = 9
 VISION_RADIUS = 50
 COLONY_RADIUS = 30
-NUM_ANTS = 80
-NUM_FOOD = int(sys.argv[1]) if len(sys.argv) > 1 else 20  # Default to 20 if no arg
 ANT_SPEED = 10
 INITIAL_LIFE = 100
 LEARNING_RATE = 0.1
 MAX_STEPS = 500000
+FRAME_INTERVAL = 100  # Save every 100 steps in 'files' mode
 
 # Colony positions
 COLONY_A_POS = (100, 100)
@@ -310,6 +330,12 @@ while running:
     for colony in board.colonies:
         colony.refresh()
 
+    # Save frame if in 'files' mode
+    if not use_display and board.step % FRAME_INTERVAL == 0:
+        os.makedirs('frames', exist_ok=True)
+        pygame.image.save(screen, f"frames/frame_{board.step:06d}.png")
+        print(f"Saved frame at step {board.step}")
+
     # Tick and check end conditions
     board.tick()
     if (board.step >= MAX_STEPS or wanted_state() or
@@ -317,14 +343,18 @@ while running:
         print('Simulation ended. Exiting.')
         with open('results.txt', 'a') as out:
             out.write(f"{NUM_ANTS},{NUM_FOOD},{board.step},{int(board.colonies[0].is_alive)},{int(board.colonies[1].is_alive)}\n")
-        break  # Use break instead of exit(0) for cleaner termination
+        
+        # Save final frame if in 'files' mode
+        if not use_display:
+            pygame.image.save(screen, "frames/final_frame.png")
+        break
 
-    # Handle events (e.g., quit)
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-    pygame.display.flip()
+    # Handle events if in 'display' mode
+    if use_display:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+        pygame.display.flip()
 
 # Clean up
 pygame.quit()
