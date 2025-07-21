@@ -387,6 +387,17 @@ while running:
 # Clean up
 if stats_file_handler:
     stats_file_handler.close()
+
+# At the end of the simulation, write parameters to last_run.env
+with open('last_run.env', 'w') as env_out:
+    env_out.write(f"NUM_ANTS={NUM_ANTS}\n")
+    env_out.write(f"NUM_FOOD={NUM_FOOD}\n")
+    env_out.write(f"OUTPUT_MODE={args.output_mode}\n")
+    env_out.write(f"STATS={'1' if args.stats else '0'}\n")
+    env_out.write(f"NO_STOP_ON_DIVERGENCE={'1' if args.no_stop_on_divergence else '0'}\n")
+    env_out.write(f"FRAME_INTERVAL={FRAME_INTERVAL}\n")
+    env_out.write(f"MAX_STEPS={MAX_STEPS}\n")
+
 pygame.quit()
 
 # Optional plotting (commented out)
