@@ -160,3 +160,7 @@ results.txt
 frames/
 stats.txt
 stats-frames/
+experiments/
+combined.mp4
+stats.mp4
+simulation.mp4

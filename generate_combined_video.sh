@@ -1,0 +1,1 @@
+ffmpeg -i stats.mp4 -i simulation.mp4 -filter_complex "[1:v]drawbox=x=0:y=0:w=800:h=600:t=1:color=black[bordered];[0:v][bordered]overlay=x=982:y=291" -pix_fmt yuv420p -c:v libx264 -crf 23 combined.mp4
