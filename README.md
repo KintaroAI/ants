@@ -113,9 +113,15 @@ Run the simulation:
 make run
 ```
 
+Run with statistics collection:
+```bash
+make run-stats
+```
+
 Or run directly:
 ```bash
 python src/colony.py --output_mode dummy --num_ants 100 --num_food 30
+python src/colony.py --stats --output_mode dummy
 ```
 
 ## Project Structure
@@ -139,6 +145,27 @@ python src/colony.py --output_mode files
 python src/colony.py --output_mode dummy
 ```
 
+## Statistics Collection
+
+Use the `--stats` flag to collect detailed statistics during simulation:
+
+```bash
+python src/colony.py --stats
+```
+
+This will create a `stats.txt` file with the following format:
+```
+step,colony_0_preference,colony_1_preference
+1,0.500000,0.500000
+2,0.510000,0.490000
+...
+```
+
+Each line contains:
+- `step`: Current simulation step
+- `colony_0_preference`: Food preference of colony 0 (0.0 = green, 1.0 = orange)
+- `colony_1_preference`: Food preference of colony 1 (0.0 = green, 1.0 = orange)
+
 ## Available Commands
 
 - `make help` - Show all available commands
@@ -146,6 +173,7 @@ python src/colony.py --output_mode dummy
 - `make install` - Install dependencies
 - `make install-dev` - Install dependencies with development tools
 - `make run` - Run the simulation
+- `make run-stats` - Run simulation with statistics collection
 - `make test` - Run tests
 - `make lint` - Run code linting
 - `make format` - Format code

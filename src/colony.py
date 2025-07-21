@@ -14,6 +14,8 @@ parser.add_argument('--num_ants', type=int, default=80, help='Number of ants (de
 parser.add_argument('--num_food', type=int, default=20, help='Number of food items (default: 20)')
 parser.add_argument('--output_mode', choices=['display', 'files', 'dummy'], default='dummy',
                     help='Output mode: "display" for window, "files" for image files, or "dummy" for no output (default: dummy)')
+parser.add_argument('--stats', action='store_true', default=False,
+                    help='Save detailed statistics to stats.txt file (default: False)')
 args = parser.parse_args()
 
 # Environment setup for Pygame
@@ -347,6 +349,14 @@ while running:
 
     # Tick and check end conditions
     board.tick()
+    
+    # Save stats if enabled
+    if args.stats:
+        with open('stats.txt', 'a') as stats_file:
+            colony_0_pref = board.colonies[0].food_preference if board.colonies[0].is_alive else 0.0
+            colony_1_pref = board.colonies[1].food_preference if board.colonies[1].is_alive else 0.0
+            stats_file.write(f"{board.step},{colony_0_pref:.6f},{colony_1_pref:.6f}\n")
+    
     if (board.step >= MAX_STEPS or wanted_state() or wanted_state() or
         not board.colonies[0].is_alive or not board.colonies[1].is_alive):
         print('Simulation ended. Exiting.')

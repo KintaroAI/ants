@@ -1,4 +1,4 @@
-.PHONY: help install install-dev test clean run lint format venv venv-clean activate
+.PHONY: help install install-dev test clean run run-stats lint format venv venv-clean activate
 
 help: ## Show this help message
 	@echo "Available commands:"
@@ -28,6 +28,9 @@ test-coverage: ## Run tests with coverage
 
 run: ## Run the simulation
 	venv/bin/python src/colony.py
+
+run-stats: ## Run the simulation with statistics collection
+	venv/bin/python src/colony.py --stats
 
 lint: ## Run linting
 	venv/bin/flake8 src/ tests/
