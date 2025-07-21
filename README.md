@@ -118,10 +118,17 @@ Run with statistics collection:
 make run-stats
 ```
 
+Show statistics visualization:
+```bash
+make show-stats
+```
+
 Or run directly:
 ```bash
 python src/colony.py --output_mode dummy --num_ants 100 --num_food 30
 python src/colony.py --stats --output_mode dummy
+python src/show_stats.py --stats_file stats.txt --output plot.png
+python src/show_stats.py --save  # Force save to file
 ```
 
 ## Project Structure
@@ -166,6 +173,23 @@ Each line contains:
 - `colony_0_preference`: Food preference of colony 0 (0.0 = green, 1.0 = orange)
 - `colony_1_preference`: Food preference of colony 1 (0.0 = green, 1.0 = orange)
 
+## Visualization
+
+After running with statistics, you can visualize the results:
+
+```bash
+make show-stats
+```
+
+This creates a plot file (`ant_colony_stats.png`) with two graphs:
+1. **Food Preferences Over Time** - Shows how each colony's food preference evolves
+2. **Preference Divergence** - Shows the difference between colony preferences
+
+The visualization includes:
+- Reference lines for green (0.0) and orange (1.0) food preferences
+- Neutral preference line (0.5)
+- Divergence thresholds (±0.9) where colonies strongly prefer different foods
+
 ## Available Commands
 
 - `make help` - Show all available commands
@@ -174,6 +198,7 @@ Each line contains:
 - `make install-dev` - Install dependencies with development tools
 - `make run` - Run the simulation
 - `make run-stats` - Run simulation with statistics collection
+- `make show-stats` - Show statistics visualization
 - `make test` - Run tests
 - `make lint` - Run code linting
 - `make format` - Format code

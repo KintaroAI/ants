@@ -317,6 +317,13 @@ for colony in board.colonies:
 for _ in range(NUM_FOOD):
     add_food()
 
+# Remove stats.txt if stats is enabled, to avoid appending to an old file
+if getattr(args, 'stats', False):
+    try:
+        os.remove('stats.txt')
+    except FileNotFoundError:
+        pass
+
 # Main simulation loop
 running = True
 while running:
