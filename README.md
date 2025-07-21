@@ -26,6 +26,21 @@ This simulation demonstrates how simple rules for individual agents (ants) can l
 
 The mechanics mimic evolutionary algorithms rather than reinforcement learning: individual ants have fixed preferences set at creation (like genes), and colonies evolve over "generations" through selection (successful foragers reproduce with random mutations) and removal (deaths from conflict), without agents updating behaviors during their lifetime. Randomness in mutations and choices drives variation, with specialization emerging implicitly from survival pressures, such as reduced fights over different foods, without pre-encoded goals beyond basic foraging rules.
 
+## Core Dynamics
+
+The simulation's main dynamic revolves around a purely evolutionary process driven by random variation and natural selection, without any explicit learning, optimization functions, or predefined target states. Here's a breakdown:
+
+- **No Learning, Only Genetic Variation**: Individual ants do not learn or adapt their behavior during their lifetime; their food preference (a value between 0.0 for orange and 1.0 for green) is fixed at "birth" and acts like a genetic trait. When an ant successfully returns food to the colony, it spawns a new ant with a slightly mutated preference (varied by ±0.1 via the learning rate, which is actually a mutation rate). Unsuccessful ants (those killed in conflicts or failing to reproduce) are removed, effectively selecting for traits that lead to survival and reproduction. This mimics Darwinian evolution: variation through random mutation, inheritance to offspring, and differential survival based on environmental fit.
+
+- **Absence of Target State or Fitness Function**: There is no encoded goal, reward system, or fitness function guiding the process toward a specific outcome (e.g., no penalty for non-specialization or bonus for divergence). The "wanted state" of polarized preferences (one colony >0.95 for one food type, the other <0.05) is merely an observer-defined stopping condition for analysis, not a driver of the simulation. Outcomes like specialization or extinction emerge solely from bottom-up interactions, not top-down design.
+
+- **Interactions with the Environment**: The environment is a bounded 800x600 grid with randomly placed food items (green or orange) that respawn upon collection or ant death. Ants interact via:
+  - **Sensing and Foraging**: Ants perform random walks unless they detect food or enemy ants within a 50-unit vision radius. They probabilistically target food matching their fixed preference, introducing bias without learning.
+  - **Competition and Conflict**: Ants can chase enemy ants carrying preferred food, leading to collisions where both lose life points if one is carrying food. This creates indirect selection pressure: preferences that reduce overlap (e.g., one colony favoring green, the other orange) lower conflict rates, as ants are less likely to fight over the same resources.
+  - **Resource Scarcity**: Limited food (default 20 items) forces competition; successful foraging replenishes colony ants, while failures lead to decline. The environment is dynamic—food respawns randomly—but neutral, with no adaptive changes beyond ant actions.
+
+Overall, the dynamic highlights how complexity arises from simplicity: random genetic drift, combined with environmental pressures (scarcity, competition), can lead to adaptive specialization without any intelligent design or learning mechanism.
+
 ## Mechanics
 
 ### Core Entities
