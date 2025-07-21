@@ -16,6 +16,8 @@ parser.add_argument('--output_mode', choices=['display', 'files', 'dummy'], defa
                     help='Output mode: "display" for window, "files" for image files, or "dummy" for no output (default: dummy)')
 parser.add_argument('--stats', action='store_true', default=False,
                     help='Save detailed statistics to stats.txt file (default: False)')
+parser.add_argument('--no_stop_on_divergence', action='store_true', default=False,
+                    help='Continue simulation even if colonies diverge in food preference')
 args = parser.parse_args()
 
 # Environment setup for Pygame
@@ -361,8 +363,9 @@ while running:
         colony_1_pref = board.colonies[1].food_preference if board.colonies[1].is_alive else 0.0
         stats_file_handler.write(f"{board.step},{colony_0_pref:.6f},{colony_1_pref:.6f}\n")
     
-    if (board.step >= MAX_STEPS or wanted_state() or wanted_state() or
-        not board.colonies[0].is_alive or not board.colonies[1].is_alive):
+    stop_on_divergence = not getattr(args, 'no_stop_on_divergence', False)
+    divergence = wanted_state()
+    if (board.step >= MAX_STEPS or (divergence and stop_on_divergence) or not board.colonies[0].is_alive or not board.colonies[1].is_alive):
         print('Simulation ended. Exiting.')
         with open('results.txt', 'a') as out:
             out.write(f"{NUM_ANTS},{NUM_FOOD},{board.step},{int(board.colonies[0].is_alive)},{int(board.colonies[1].is_alive)}\n")
