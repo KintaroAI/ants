@@ -318,11 +318,9 @@ for _ in range(NUM_FOOD):
     add_food()
 
 # Remove stats.txt if stats is enabled, to avoid appending to an old file
+stats_file_handler = None
 if getattr(args, 'stats', False):
-    try:
-        os.remove('stats.txt')
-    except FileNotFoundError:
-        pass
+    stats_file_handler = open('stats.txt', 'w')
 
 # Main simulation loop
 running = True
@@ -358,11 +356,10 @@ while running:
     board.tick()
     
     # Save stats if enabled
-    if args.stats:
-        with open('stats.txt', 'a') as stats_file:
-            colony_0_pref = board.colonies[0].food_preference if board.colonies[0].is_alive else 0.0
-            colony_1_pref = board.colonies[1].food_preference if board.colonies[1].is_alive else 0.0
-            stats_file.write(f"{board.step},{colony_0_pref:.6f},{colony_1_pref:.6f}\n")
+    if stats_file_handler and board.step % FRAME_INTERVAL == 0:
+        colony_0_pref = board.colonies[0].food_preference if board.colonies[0].is_alive else 0.0
+        colony_1_pref = board.colonies[1].food_preference if board.colonies[1].is_alive else 0.0
+        stats_file_handler.write(f"{board.step},{colony_0_pref:.6f},{colony_1_pref:.6f}\n")
     
     if (board.step >= MAX_STEPS or wanted_state() or wanted_state() or
         not board.colonies[0].is_alive or not board.colonies[1].is_alive):
@@ -383,6 +380,8 @@ while running:
         pygame.display.flip()
 
 # Clean up
+if stats_file_handler:
+    stats_file_handler.close()
 pygame.quit()
 
 # Optional plotting (commented out)
