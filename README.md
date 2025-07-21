@@ -115,7 +115,7 @@ make run
 
 Or run directly:
 ```bash
-python src/colony.py [num_food]
+python src/colony.py --output_mode dummy --num_ants 100 --num_food 30
 ```
 
 ## Project Structure
@@ -123,6 +123,21 @@ python src/colony.py [num_food]
 - `src/colony.py` - Main simulation file
 - `requirements.txt` - Python dependencies
 - `README.md` - Project documentation
+
+## Output Modes
+
+The simulation supports three output modes:
+
+- **`display`** - Shows the simulation in a pygame window
+- **`files`** - Saves frames as PNG images in a `frames/` directory
+- **`dummy`** - Runs without any visual output or file saving (fastest)
+
+Use `--output_mode` argument to specify the mode:
+```bash
+python src/colony.py --output_mode display
+python src/colony.py --output_mode files
+python src/colony.py --output_mode dummy
+```
 
 ## Available Commands
 

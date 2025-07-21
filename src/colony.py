@@ -8,21 +8,21 @@ import collections
 import argparse
 
 
-# Environment setup for Pygame
-os.environ['SDL_VIDEODRIVER'] = 'dummy'  # Use dummy by default for headless runs; can be overridden
-
-
-# Initialize Pygame
-pygame.init()
-WIDTH, HEIGHT = 800, 600
-
 # Parse command-line arguments
 parser = argparse.ArgumentParser(description="Ant Colonies Simulation")
 parser.add_argument('--num_ants', type=int, default=80, help='Number of ants (default: 80)')
 parser.add_argument('--num_food', type=int, default=20, help='Number of food items (default: 20)')
-parser.add_argument('--output_mode', choices=['display', 'files'], default='files',
-                    help='Output mode: "display" for window or "files" for image files (default: files)')
+parser.add_argument('--output_mode', choices=['display', 'files', 'dummy'], default='dummy',
+                    help='Output mode: "display" for window, "files" for image files, or "dummy" for no output (default: dummy)')
 args = parser.parse_args()
+
+# Environment setup for Pygame
+if args.output_mode in ['dummy', 'files']:
+    os.environ['SDL_VIDEODRIVER'] = 'dummy'  # Use dummy by default for headless runs; can be overridden
+
+# Initialize Pygame
+pygame.init()
+WIDTH, HEIGHT = 800, 600
 
 NUM_ANTS = args.num_ants
 NUM_FOOD = args.num_food
@@ -32,9 +32,18 @@ if args.output_mode == 'display':
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Ant Colonies Simulation")
     use_display = True
-else:
+    use_dummy = False
+    use_files = False
+elif args.output_mode == 'dummy':
     screen = pygame.Surface((WIDTH, HEIGHT))
     use_display = False
+    use_dummy = True
+    use_files = False
+else:  # files mode
+    screen = pygame.Surface((WIDTH, HEIGHT))
+    use_display = False
+    use_dummy = False
+    use_files = True
 
 # Colors as constants
 COLOR_WHITE = (255, 255, 255)
@@ -331,21 +340,21 @@ while running:
         colony.refresh()
 
     # Save frame if in 'files' mode
-    if not use_display and board.step % FRAME_INTERVAL == 0:
+    if use_files and board.step % FRAME_INTERVAL == 0:
         os.makedirs('frames', exist_ok=True)
         pygame.image.save(screen, f"frames/frame_{board.step:06d}.png")
         print(f"Saved frame at step {board.step}")
 
     # Tick and check end conditions
     board.tick()
-    if (board.step >= MAX_STEPS or wanted_state() or
+    if (board.step >= MAX_STEPS or wanted_state() or wanted_state() or
         not board.colonies[0].is_alive or not board.colonies[1].is_alive):
         print('Simulation ended. Exiting.')
         with open('results.txt', 'a') as out:
             out.write(f"{NUM_ANTS},{NUM_FOOD},{board.step},{int(board.colonies[0].is_alive)},{int(board.colonies[1].is_alive)}\n")
         
         # Save final frame if in 'files' mode
-        if not use_display:
+        if use_files:
             pygame.image.save(screen, "frames/final_frame.png")
         break
 
