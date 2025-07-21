@@ -95,6 +95,35 @@ Overall, the dynamic highlights how complexity arises from simplicity: random ge
   - Food preference over steps for each colony.
   - Cumulative deaths over steps.
 
+## Command-Line Arguments
+
+The simulation supports the following command-line arguments:
+
+- `--num_ants N` — Number of ants (default: 80, split evenly between colonies)
+- `--num_food N` — Number of food items (default: 20)
+- `--output_mode MODE` — Output mode: `display`, `files`, or `dummy` (default: `dummy`)
+- `--stats` — Save detailed statistics to `stats.txt` (default: off)
+- `--no_stop_on_divergence` — Continue simulation even if colonies' preferences diverge (default: stop on divergence)
+
+Example:
+```bash
+python src/colony.py --num_ants 100 --num_food 30 --output_mode files --stats --no_stop_on_divergence
+```
+
+## Frame Output and Interval
+
+- When using `--output_mode files`, frames are saved as PNG images in the `frames/` directory.
+- Frame filenames are monotonically increasing: `frame_000001.png`, `frame_000002.png`, ... (no gaps, not based on simulation step).
+- The interval for saving frames and statistics is controlled by `FRAME_INTERVAL` (default: 100 steps).
+
+## Stopping Conditions
+
+The simulation stops when one of the following is true:
+- Maximum steps (`MAX_STEPS`, default: 500,000) is reached
+- One or both colonies go extinct
+- **By default:** Preferences diverge (one colony >0.95, other <0.05)
+- **If `--no_stop_on_divergence` is set:** Simulation continues even if preferences diverge
+
 ## Quick Running the Simulation
 1. Install dependencies: `pip install pygame matplotlib` (though Matplotlib is optional).
 2. Run: `python src/colony.py [num_food]` (e.g., `python src/colony.py 50`).
@@ -142,6 +171,7 @@ Or run directly:
 ```bash
 python src/colony.py --output_mode dummy --num_ants 100 --num_food 30
 python src/colony.py --stats --output_mode dummy
+python src/colony.py --output_mode files --stats --no_stop_on_divergence
 python src/show_stats.py --stats_file stats.txt --output plot.png
 python src/show_stats.py --save  # Force save to file
 ```
