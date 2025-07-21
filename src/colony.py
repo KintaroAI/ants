@@ -326,6 +326,7 @@ if getattr(args, 'stats', False):
 
 # Main simulation loop
 running = True
+frame_idx = 0
 while running:
     screen.fill(COLOR_WHITE)
 
@@ -351,8 +352,9 @@ while running:
     # Save frame if in 'files' mode
     if use_files and board.step % FRAME_INTERVAL == 0:
         os.makedirs('frames', exist_ok=True)
-        pygame.image.save(screen, f"frames/frame_{board.step:06d}.png")
-        print(f"Saved frame at step {board.step}")
+        pygame.image.save(screen, f"frames/frame_{frame_idx:06d}.png")
+        print(f"Saved frame {frame_idx:06d} at step {board.step}")
+        frame_idx += 1
 
     # Tick and check end conditions
     board.tick()
