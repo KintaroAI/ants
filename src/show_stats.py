@@ -131,7 +131,7 @@ def main():
                 frame_c0 = colony_0_prefs[:i]
                 frame_c1 = colony_1_prefs[:i]
                 frame_plot = create_preference_plot(frame_steps, frame_c0, frame_c1, args.title, xlim=xlim)
-                frame_path = f'stats-frames/frame_{i:06d}.png'
+                frame_path = f'stats-frames/frame_{i-1:06d}.png'
                 frame_plot.savefig(frame_path, dpi=150, bbox_inches='tight')
                 print(f"Saved {frame_path}")
             print("Animation complete.")
