@@ -1,14 +1,14 @@
 #!/bin/bash
 
 MAX_PARALLEL=10
-START_ANTS=10
+START_ANTS=1
 END_ANTS=100
-START_FOOD=10
+START_FOOD=1
 END_FOOD=100
 
 # You can adjust the step if you want fewer total runs
-STEP_ANTS=10
-STEP_FOOD=10
+STEP_ANTS=1
+STEP_FOOD=1
 
 run_one() {
     local ants=$1
