@@ -139,16 +139,22 @@ This project serves as an educational tool for agent-based modeling and could be
 
 ## Installation
 
-1. Clone the repository
-2. Create virtual environment and install dependencies:
-   ```bash
-   make install
-   ```
-   
-   Or for development with testing tools:
-   ```bash
-   make install-dev
-   ```
+To install and run this project on a Debian-based system (or most Linux systems):
+
+```bash
+sudo apt update
+sudo apt upgrade -y
+sudo apt install -y git python3-venv
+
+git clone https://github.com/KintaroAI/ants.git
+cd ants
+make install
+```
+
+Or for development with testing tools:
+```bash
+make install-dev
+```
 
 ## Usage
 
