@@ -366,7 +366,7 @@ while running:
         stats_file_handler.write(f"{board.step},{colony_0_pref:.6f},{colony_1_pref:.6f}\n")
     
     stop_on_divergence = not getattr(args, 'no_stop_on_divergence', False)
-    divergence = wanted_state()
+    divergence = stop_on_divergence and wanted_state() or False
     if (board.step >= MAX_STEPS or (divergence and stop_on_divergence) or not board.colonies[0].is_alive or not board.colonies[1].is_alive):
         print('Simulation ended. Exiting.')
         with open('results.txt', 'a') as out:
