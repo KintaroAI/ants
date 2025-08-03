@@ -113,6 +113,14 @@ Overall, the dynamic highlights how complexity arises from simplicity: random ge
 ![3D Scatter Plot](static/3d_scatter.png)
 *Three-dimensional visualization of the divergence patterns, providing additional perspective on the relationship between simulation parameters and outcomes.*
 
+### Simulation Start State
+![Simulation Start](static/start.gif)
+*Beginning of the simulation: both colonies start with equal numbers of ants and neutral food preferences (50% green, 50% orange). Food items are evenly distributed across the environment.*
+
+### Simulation End State
+![Simulation End](static/end.gif)
+*End of the simulation: colonies have developed distinctive food preferences through evolutionary pressure. The red colony now strongly prefers green food, while the black colony prefers orange food, demonstrating emergent specialization.*
+
 ## Command-Line Arguments
 
 The simulation supports the following command-line arguments:
