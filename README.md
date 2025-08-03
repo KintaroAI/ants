@@ -95,6 +95,24 @@ Overall, the dynamic highlights how complexity arises from simplicity: random ge
   - Food preference over steps for each colony.
   - Cumulative deaths over steps.
 
+## First Results
+
+### Food Preference Divergence Over Time
+![Food Preference Evolution](static/ant_colony_food_preference.png)
+*The divergence of food preferences over time during a single simulation run. Colonies start with neutral preferences and gradually specialize in different food types.*
+
+### Preference Swap Phenomenon
+![Food Preference Swap](static/ant_colony_food_preference_swap.png)
+*Even though divergence is generally stable, preference swaps can occur, showing the dynamic nature of colony specialization.*
+
+### Steps to Divergence Analysis
+![Steps to Divergence](static/steps_to_divergence_success_only.png)
+*Results from 10,000 simulations showing the distribution of steps required for divergence. Note that the fastest divergence occurs at the edge of extinction, indicating a critical phase transition.*
+
+### 3D Visualization of Divergence Patterns
+![3D Scatter Plot](static/3d_scatter.png)
+*Three-dimensional visualization of the divergence patterns, providing additional perspective on the relationship between simulation parameters and outcomes.*
+
 ## Command-Line Arguments
 
 The simulation supports the following command-line arguments:
