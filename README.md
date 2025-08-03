@@ -97,6 +97,14 @@ Overall, the dynamic highlights how complexity arises from simplicity: random ge
 
 ## First Results
 
+### Simulation Start State
+![Simulation Start](static/start.gif)
+*Beginning of the simulation: both colonies start with equal numbers of ants and neutral food preferences (50% green, 50% orange). Food items are evenly distributed across the environment.*
+
+### Simulation End State
+![Simulation End](static/end.gif)
+*End of the simulation: colonies have developed distinctive food preferences through evolutionary pressure. The red colony now strongly prefers green food, while the black colony prefers orange food, demonstrating emergent specialization.*
+
 ### Food Preference Divergence Over Time
 ![Food Preference Evolution](static/ant_colony_food_preference.png)
 *The divergence of food preferences over time during a single simulation run. Colonies start with neutral preferences and gradually specialize in different food types.*
@@ -112,14 +120,6 @@ Overall, the dynamic highlights how complexity arises from simplicity: random ge
 ### 3D Visualization of Divergence Patterns
 ![3D Scatter Plot](static/3d_scatter.png)
 *Three-dimensional visualization of the divergence patterns, providing additional perspective on the relationship between simulation parameters and outcomes.*
-
-### Simulation Start State
-![Simulation Start](static/start.gif)
-*Beginning of the simulation: both colonies start with equal numbers of ants and neutral food preferences (50% green, 50% orange). Food items are evenly distributed across the environment.*
-
-### Simulation End State
-![Simulation End](static/end.gif)
-*End of the simulation: colonies have developed distinctive food preferences through evolutionary pressure. The red colony now strongly prefers green food, while the black colony prefers orange food, demonstrating emergent specialization.*
 
 ## Command-Line Arguments
 
